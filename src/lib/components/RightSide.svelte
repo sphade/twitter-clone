@@ -4,7 +4,7 @@
 	import Button from './ui/button/button.svelte';
 </script>
 
-<div class="px-5 flex-[0.6] hidden md:inline-block  border py-2 space-y-4">
+<div class="px-5 flex-[0.6] hidden md:inline-block border py-2 space-y-4">
 	<SearchBar />
 	<Card let:Title>
 		<Title>subscribe to premium</Title>
@@ -18,7 +18,7 @@
 		<Title>trends for you</Title>
 		<div slot="content">
 			{#each { length: 20 } as _}
-				<div class="space-y-1 cursor-pointer  rounded py-2 hover:bg-gray-800">
+				<div class="space-y-1 cursor-pointer rounded py-2 hover:bg-gray-800">
 					<div class="flex items-center gap-1 text-xs text-gray-500 capitalize">
 						<p>music</p>
 						<p>trending</p>

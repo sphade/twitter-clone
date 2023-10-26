@@ -19,5 +19,7 @@ export async function POST({ request, cookies }) {
 }
 export const DELETE = async ({ cookies }) => {
 	cookies.delete('__session', { path: '/' });
-	throw redirect(303, '/');
+
+		return json({ status: 'signedOut' });
+	
 };

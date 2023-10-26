@@ -1,18 +1,16 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import * as Avatar from '$lib/components/ui/avatar';
-	import { db } from '$lib/firebase';
-	import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore';
+
 	import { ChatBubble, Heart, HeartFilled } from 'radix-icons-svelte';
 	export let avatar: string;
 	export let tweet: string;
 	export let email: string;
 	export let name: string;
-	export let timestamp: any;
+
 	export let id: string;
 	export let img: string | undefined;
 	export let likes: string[];
-	// export let  likes:string
 </script>
 
 <a href="/post/{id}" class="flex gap-2 border-t p-3">

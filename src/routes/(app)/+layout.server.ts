@@ -8,6 +8,6 @@ export const load = async ({ locals }) => {
 	}
 	return {
 		userId,
-		user: getUser(userId),
+		user: getUser(userId)
 	};
 };

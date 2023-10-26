@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { Form as FormPrimitive } from "formsnap";
-	import { buttonVariants } from "$lib/components/ui/button";
-	import { cn } from "$lib/utils";
-	import { CaretSort } from "radix-icons-svelte";
-	import type { HTMLSelectAttributes } from "svelte/elements";
+	import { Form as FormPrimitive } from 'formsnap';
+	import { buttonVariants } from '$lib/components/ui/button';
+	import { cn } from '$lib/utils';
+	import { CaretSort } from 'radix-icons-svelte';
+	import type { HTMLSelectAttributes } from 'svelte/elements';
 
 	type $$Props = HTMLSelectAttributes;
 
@@ -13,8 +13,8 @@
 
 <FormPrimitive.Select
 	class={cn(
-		buttonVariants({ variant: "outline" }),
-		"appearance-none bg-transparent font-normal",
+		buttonVariants({ variant: 'outline' }),
+		'appearance-none bg-transparent font-normal',
 		className
 	)}
 	{...$$restProps}

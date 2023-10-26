@@ -1,31 +1,17 @@
 <script lang="ts">
 	import Header from '$lib/components/Header.svelte';
-	import SearchBar from '$lib/components/SearchBar.svelte';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import TweetCard from '$lib/components/TweetCard.svelte';
 	import { Image } from 'radix-icons-svelte';
-	import { createPost } from '$lib/services/mutation.js';
-	import { serverTimestamp } from 'firebase/firestore';
-	import { enhance } from '$app/forms';
+	import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 	import { invalidate } from '$app/navigation';
-	import { storage } from '$lib/firebase.js';
+	import { db, storage } from '$lib/firebase.js';
 	import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-	let tweet = '';
 	let loading = false;
+	let tweet = '';
 	let imgFile;
 	export let data;
-	// on:click={async () => {
-	// 				await createPost({
-	// 					tweet,
-	// 					use  rID: data.userId,
-	// 					img: '',
-	// 					...data.user,
-	// 					likes: [],
-	// 					timestamp: serverTimestamp()
-	// 				});
-	// 				tweet = '';
-	// 			}}
 </script>
 
 <Header />
@@ -70,16 +56,17 @@
 						const result = await uploadBytes(storageRef, imgFile);
 						url = await getDownloadURL(result.ref);
 					}
-					await createPost({
+
+					await addDoc(collection(db, 'posts'), {
 						tweet,
 						userID: data.userId,
 						img: url,
 						...data.user,
 						likes: []
 					});
-					invalidate('posts');
 					loading = false;
 					tweet = '';
+					invalidate('posts');
 				}}
 				disabled={tweet?.length < 5 || loading}
 			>
@@ -101,7 +88,6 @@
 				img={post.img}
 				name={post.name}
 				tweet={post.tweet}
-				timestamp={post.timestamp}
 				id={post.id}
 				likes={post.likes}
 			/>

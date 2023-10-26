@@ -3,35 +3,23 @@
 	import { ArrowBottomLeft, ChatBubble, Heart, HeartFilled } from 'radix-icons-svelte';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import {
-		addDoc,
-		arrayRemove,
-		arrayUnion,
-		collection,
-		doc,
-		onSnapshot,
-		query,
-		updateDoc,
-		where
-	} from 'firebase/firestore';
+	import { addDoc, collection, doc, onSnapshot, query, updateDoc, where } from 'firebase/firestore';
 	import { db } from '$lib/firebase.js';
 	import { page } from '$app/stores';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	export let data;
-	console.log('🚀 ~ file: +page.svelte:22 ~ data:', data);
 	let comment = '';
 	const handleLikes = async () => {
-		const postRef = doc(db, 'posts', $page.params.postId);
 		let newLikes;
+		const postRef = doc(db, 'posts', $page.params.postId);
 		if (data.post.likes.includes(data.userId)) {
 			newLikes = data.post.likes.filter((id) => id !== data.userId);
 		} else {
 			newLikes = [...data.post.likes, data.userId];
 		}
 		data.post.likes = newLikes; // Optimistically update likes
-		invalidate($page.params.postId);
-
+		
 		try {
 			await updateDoc(postRef, {
 				likes: newLikes
@@ -40,18 +28,10 @@
 			console.error('Failed to update likes:', error);
 			invalidate($page.params.postId);
 		}
+		// invalidate($page.params.postId);
 	};
 	$: comments = data.comments;
-	// const getComments = () => {
-	// 	const q = query(collection(db, 'comments'), where('postId', '==', $page.params.postId));
-	// 	const unsubscribe = onSnapshot(q, (querySnapshot: any[]) => {
-	// 		let newComments = [];
-	// 		querySnapshot.forEach((doc) => {
-	// 			newComments.push(doc.data());
-	// 		});
-	// 		comments = newComments;
-	// 	});
-	// };
+
 	onMount(() => {
 		const q = query(collection(db, 'comments'), where('postId', '==', $page.params.postId));
 		const unsubscribe = onSnapshot(q, (querySnapshot: any[]) => {

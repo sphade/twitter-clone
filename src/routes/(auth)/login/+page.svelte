@@ -36,17 +36,9 @@
 			console.log(error);
 		}
 	};
-	const logOut = async () => {
-		await signOut(auth);
-		await fetch('/login', {
-			method: 'DELETE'
-		});
-	};
 </script>
 
-<div class="flex items-center h-screen gap-5 w-screen border justify-center">
+<div class="flex flex-col items-center h-screen  w-screen border justify-center">
+	<img src="/xLogo.svg" alt="">
 	<Button on:click={login}>login with google</Button>
-	<Button on:click={logOut}>signout</Button>
-	<Button href="/">home</Button>
-	<Button href="/post/jshjsj">post</Button>
 </div>

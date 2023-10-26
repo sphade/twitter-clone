@@ -1,5 +1,5 @@
 import { db } from '$lib/firebase';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import { error } from '@sveltejs/kit';
 import type { IPost, IUser } from '$lib/types';
 export const getUser = async (uid: string) => {
@@ -31,4 +31,15 @@ export const getPost = async (id: string) => {
 	} catch (e) {
 		throw error(400, 'an error occurred, try again later ');
 	}
+};
+export 	const getComments = async (postId:string) => {
+	const comments = [];
+
+	const q = query(collection(db, 'comments'), where('postId', '==', postId));
+
+	const querySnapshot = await getDocs(q);
+	querySnapshot.forEach((doc) => {
+		comments.push({ id: doc.id, ...doc.data() });
+	});
+	return comments;
 };
